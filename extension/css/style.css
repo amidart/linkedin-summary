@@ -1,0 +1,31 @@
+#extension-results {
+  margin-bottom: 15px;
+}
+
+.extension-show {
+  margin-left: 6px;
+  font-size: 75%;
+  cursor: pointer;
+  color: #666;
+}
+
+.hidden {
+  display: none;
+}
+
+.found {
+  color: #333;
+}
+
+.notfound {
+  font-size: 90% !important;
+  color: #ccc !important;
+}
+
+.extension-under18-list p {
+  margin-bottom: 5px;
+}
+
+.extension-under18-list p strong {
+  font-weight: bold;
+}

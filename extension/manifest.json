@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "LinkedIn Summary",
+  "description": "",
+  "version": "0.4",
+  "icons": {
+    "128": "img/icon128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["lib/jquery-2.1.1.min.js", "js/content-script.js"],
+      "css": ["css/style.css"],
+      "run_at": "document_end"
+    }
+  ]
+
+}
