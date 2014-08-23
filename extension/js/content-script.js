@@ -1,29 +1,30 @@
 var Module = (function(my){
 
-  var KEYWORDS = [
-    'HTML',
-    'CSS',
-    'JavaScript',
-    '.js',
-    'Node.js',
-    'SQL',
-    'LAMP',
-    'PHP',
-    'MEAN',
-    'web',
-    'mobile'
-  ];
-
+  var keywords = [];
 
   my.init = function() {
-    getProfileInfo();
+    getKeywords(getProfileInfo);
   };
 
+
+  /**
+   * Get keywords from localStorage
+   * @param  {function} startParser - callback to run the profile parser
+   */
+  var getKeywords = function( startParser ) {
+    chrome.runtime.sendMessage({method: "getLocalStorage", key: "keywords"}, function(response) {
+      keywordsStr = response.data;
+      if (keywordsStr) {
+        keywords = keywordsStr.split(';');
+      }
+      startParser();
+    });
+  };
 
   var getProfileInfo = function() {
     var workResult = getWorkingYears();
     var eduResult = processEducation();
-    var foundKeywords = processKeywords(KEYWORDS);
+    var foundKeywords = processKeywords(keywords);
     showResults(workResult, eduResult, foundKeywords);
     //console.log(workResult, eduResult, foundKeywords);
   };
@@ -137,12 +138,13 @@ var Module = (function(my){
     var age,
         firstFinishedYear = new Date().getFullYear();
     $('#background-education .section-item').each(function(i, node){
+      var school = $(node).find('h4.summary').text();
       var degree = $(node).find('.degree').text();
       var years = $(node).find('.education-date').text();
       // get degrees
       if (degree) {
         degree =  $(node).find('h5').text();
-        degrees.push(degree);
+        degrees.push(degree + ' (' + school + ')');
       }
       // get approximate age
       if (years) {
@@ -186,9 +188,9 @@ var Module = (function(my){
     html += addTableItem('Years of work experience (last - first)', work.diff);
     html += addTableItem('Number of jobs under 1.5 years length', under18str);
     html += addTableItem('Approximate age', edu.age);
-    html += addTableItem('Degrees', edu.degrees.join(', '));
+    html += addTableItem('Degrees', edu.degrees.join(',<br/>'));
 
-    var notfound = $.grep(KEYWORDS, function (value, index) {
+    var notfound = $.grep(keywords, function (value, index) {
       if (foundKeys[value]) return false;
       else return true;
     });

@@ -2,10 +2,17 @@
   "manifest_version": 2,
   "name": "LinkedIn Summary",
   "description": "",
-  "version": "0.4",
+  "version": "0.5",
   "icons": {
     "128": "img/icon128.png"
   },
+
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+
+  "options_page": "html/options.html",
 
   "content_scripts": [
     {

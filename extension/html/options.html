@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Options</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+    body {
+        font: 16/24px Tahoma ;
+    }
+    #wrap {
+        width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #eee;
+    }
+    .text-center {
+        text-align: center
+    }
+    #wrap input {
+        margin-bottom: 10px;
+    }
+    .comment {
+        color: #aaa;
+        font-size: 75%;
+    }
+    button {
+        padding: 10px 20px;
+        font-weight: bold;
+    }
+    textarea {
+        width: 80%;
+        height: 200px;
+    }
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+    <h1>Settings</h1>
+    <strong>Keywords (one pattern per line)</strong>
+    <div>
+        <textarea id="keywords"></textarea>
+    </div>
+    <br/>
+    <div class="text-center">
+        <button id="save">Save</button>
+        <button id="close">Close</button>
+        <div id="status"></div>
+    </div>
+</div>
+</body>
+
+<script src="/js/options.js"></script>
+
+</html>
