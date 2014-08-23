@@ -51,7 +51,7 @@ var Module = (function(my){
       var title = $node.find('h4 a[name=title]').text();
       var years = parseYears(yearsStr);
       years.title = title;
-      sumMonths += years.inMonths;
+      if (years.inMonths) sumMonths += years.inMonths;
       if (years.start < minYear) minYear = years.start;
 
       if (yearsByCompany[company]) yearsByCompany[company].push(years);
@@ -60,11 +60,13 @@ var Module = (function(my){
 
     sumYears = Math.floor(sumMonths/12);
     sumMonths = sumMonths % 12;
+    var duration = '-';
+    if (sumYears || sumMonths) duration = sumYears + ' years ' + sumMonths + ' months';
 
     jobsUnder18 = findUnder18(yearsByCompany);
 
     var result = {
-      duration: sumYears + ' years ' + sumMonths + ' months',
+      duration: duration,
       diff: new Date().getFullYear() - minYear,
       under18: jobsUnder18
     };
@@ -97,10 +99,13 @@ var Module = (function(my){
       } catch (e) { months = 0;}
     }
 
+    var inMonths;
+    if (years !== undefined && months !== undefined) inMonths = years * 12 + months;
+
     var result = {
       start: start,
       stop: stop,
-      inMonths: years * 12 + months
+      inMonths: inMonths
     };
     return result;
   };
@@ -115,7 +120,7 @@ var Module = (function(my){
           lastTitle;
       for (var i = 0, len = arrYears.length; i < len; i++) {
         var years = arrYears[i];
-        sum += years.inMonths;
+        if (years.inMonths) sum += years.inMonths;
         if (!lastTitle) lastTitle = years.title;
         if (years.stop === 'Present') present = true;
       }
